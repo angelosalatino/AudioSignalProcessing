@@ -42,7 +42,7 @@ using namespace std;
 // WAVE PCM audio file format (other information are available here: https://ccrma.stanford.edu/courses/422/projects/WaveFormat/ )
 typedef struct header_file
 {
-    char chunk_id[4]; // RIFF = little-endian (default), RIFX = big-endian
+    char chunk_id[4];
     int chunk_size;
     char format[4];
     char subchunk1_id[4];
@@ -71,7 +71,7 @@ int main(int argc, char** argv)
         header_p meta = new header;
         short int* pU = NULL;
         unsigned char* pC = NULL;
-        double * gWavDataIn = NULL;
+        double ** gWavDataIn = NULL;
         char* wBuffer = NULL;
 
         ifstream infile;
@@ -108,7 +108,9 @@ int main(int argc, char** argv)
         else cout << " Byte order: Little-Endian " << endl;
 
         try{
-            gWavDataIn = new double[numOfSample]; //data structure storing the samples
+            gWavDataIn = new double*[meta->num_channels]; //data structure storing the samples
+            for (int i = 0; i < meta->num_channels; i++) gWavDataIn[i] = new double[numOfSample];
+
             wBuffer = new char[meta->subchunk2_size]; //data structure storing the bytes
         }catch ( bad_alloc& e ) {
             printERR("unallocated memory");
@@ -127,7 +129,10 @@ int main(int argc, char** argv)
             pU = (short*) wBuffer;
             for( int i = 0; i < numOfSample; i++)
             {
-                gWavDataIn[i] = (double) (pU[i]);
+                for (int j = 0; j < meta->num_channels; j++)
+                {
+                    gWavDataIn[j][i] = (double) (pU[i]);
+                }
             }
         }
         else if(meta->bits_per_sample == 8)
@@ -135,12 +140,15 @@ int main(int argc, char** argv)
             pC = (unsigned char*) wBuffer;
             for( int i = 0; i < numOfSample; i++)
             {
-                gWavDataIn[i] = (double) (pC[i]);
+                for (int j = 0; j < meta->num_channels; j++)
+                {
+                    gWavDataIn[j][i] = (double) (pC[i]);
+                }
             }
         }
         else
         {
-            throw "Unhandled case";
+            printERR("Unhandled case");
         }
 
 
@@ -155,7 +163,12 @@ int main(int argc, char** argv)
 #ifdef  DEBUG
         for( int i = 0; i < numOfSample; i++)
         {
-            cout<<i+1<<":"<<gWavDataIn[i]<<endl;
+            cout<<i+1<<":";
+            for (int j = 0; j < meta->num_channels; j++)
+            {
+                cout<<gWavDataIn[j][i]<<"  ";
+            }
+            cout<<endl;
         }
 #endif     /* -----  not in DEBUG  ----- */
 
@@ -164,11 +177,16 @@ int main(int argc, char** argv)
          */
         for( int i = 0; i < numOfSample; i++)
         {
-            outfile << gWavDataIn[i] << endl;
+            for (int j = 0; j < meta->num_channels; j++)
+            {
+                outfile<<gWavDataIn[j][i]<<";";
+            }
+            outfile<<endl;
         }
         cout<<"File written successfully, check " << argv[2] << endl;
         infile.close();
         outfile.close();
+        for (int i = 0; i < meta->num_channels; i++) delete gWavDataIn[i];
         delete[] gWavDataIn;
         delete meta;
 
