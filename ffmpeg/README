@@ -1,0 +1,15 @@
+##############################################
+#
+#  README for audio file reader with FFMPEG
+#
+##############################################
+
+Use: "make"
+to compile.
+The implemented command line is: g++ ffmp.cpp -o ffmp -std=c++11 -lavutil -lavcodec -lavformat -L/usr/local/lib 
+
+Use: "make clean"
+to clean the previous compilation.
+
+
+test.wav and test.mp3 are the similar but in different format.  

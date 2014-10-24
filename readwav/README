@@ -1,0 +1,17 @@
+############################################################
+#
+#  wavreader.cpp: reads .wav files
+#
+############################################################
+
+
+This code is based on K. L. Srinivas' work: http://www.ee.iitb.ac.in/daplab/resources/wav_read_write.cpp using all the specification in https://ccrma.stanford.edu/courses/422/projects/WaveFormat/
+
+wavreader.cpp has been tested on Linux OS using g++ compiler.
+
+Use: "make"
+to compile.
+The command g++ wavreader.cpp -o wavreader has been implemented.
+
+Use: "make clean"
+to clean the previous compilation.
