@@ -23,7 +23,7 @@ clear filename
 %% Information
 % Section ID = 2
 
-% tempo is the track length (in secondi)
+% tempo is track length (in seconds)
 numberOfSamples = length(data);
 tempo = numberOfSamples / fs;
 
@@ -64,7 +64,7 @@ else
     Y = buffer(data,sampleForWindow,ceil(sampleToJump));
 end
 
-[m,n]=size(Y); % m corrisponde a sampleForWindow
+[m,n]=size(Y); % m corresponds to sampleForWindow
 numFrames = n;
 
 disp(sprintf('Number of Frames: %d',numFrames));
@@ -144,6 +144,9 @@ if indexToPlot < numFrames
 else
     disp('Unable to create plot');
 end
+
+specgram(data,sampleForWindow,fs)
+title('Spectrogram [dB]')
 
 clear indexToPlot
 
