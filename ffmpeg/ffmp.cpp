@@ -79,7 +79,8 @@ int main(int argc, char *argv[])
             avformat_close_input(&formatContext);
             cout << "Couldn't find a proper decoder!";
             return -1;
-        }else if (avcodec_open(codecContext,/*codecContext->*/codec))
+        }
+        else if (avcodec_open(codecContext,/*codecContext->*/codec))
         {
             av_free(frame);
             avformat_close_input(&formatContext);
