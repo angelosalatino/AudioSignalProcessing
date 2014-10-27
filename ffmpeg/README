@@ -13,3 +13,11 @@ to clean the previous compilation.
 
 
 test.wav and test.mp3 are the similar but in different format.  
+
+
+-------------- PLEASE PAY ATTENTION ON THIS -------
+
+This version has been tested on Linux OS (Ubuntu) with: 
+libavutil.so.51
+libavcodec.so.53
+libavformat.so.53
