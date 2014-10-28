@@ -4,4 +4,6 @@ TWO MAIN FOLDERS:
 
 2) ffmpeg - c++ code with ffmpeg library to read samples form different audio formats;
 
-3) matlab - matlab code to audio signal processing.
+3) matlab - matlab code to audio signal processing;
+
+4) praat - a script able to extract pitch values.
