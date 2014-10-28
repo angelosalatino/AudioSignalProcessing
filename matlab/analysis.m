@@ -116,7 +116,8 @@ clear num_points w_gauss w_hamming w_hann
 % Execute Section ID=4
 
 for i=1:numFrames
-    energy(i)=sum(abs(Y(:,i)).^2);
+    %energy(i)=sum(abs(Y(:,i)).^2); % Windowed Signal
+    energy(i)=sum(abs(old_Y(:,i)).^2);
 end
 
 figure, plot(energy)
@@ -139,8 +140,8 @@ clear NFFT freqSignal f
 %% Short Term Fourier Transform
 % Section ID = 8
 
-% It requires that signal is already framed
-% Execute Section ID=4
+% It requires that signal is already framed and windowed
+% Execute Section ID = 4 and 5
 
 NFFT = 2^nextpow2(sampleForWindow); 
 STFT = ones(NFFT,numFrames);
