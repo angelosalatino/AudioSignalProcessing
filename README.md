@@ -1,4 +1,4 @@
-TWO MAIN FOLDERS:
+FOUR MAIN FOLDERS:
 
 1) readwav - c++ code to read samples from wave files;
 

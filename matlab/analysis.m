@@ -17,10 +17,14 @@
 
 filename = './test.wav';
 [data,fs] = wavread(filename);
+%or
+%[data,fs] = audioread(filename);
+filename_copy = './testCopy.wav';
+audiowrite(filename_copy,data,fs)
 
 clear filename
 
-%% Information
+%% Information & play
 % Section ID = 2
 
 % tempo is track length (in seconds)
@@ -31,6 +35,9 @@ disp (sprintf('Length: %f seconds',tempo));
 disp (sprintf('Number of Samples %d', numberOfSamples));
 disp (sprintf('Sampling Frequency %d Hz',fs));
 disp (sprintf('Number of Channels: %d', min(size(data))));
+
+%play file
+sound(data,fs);
 
 clear tempo
 
@@ -102,8 +109,20 @@ hold off
 
 clear num_points w_gauss w_hamming w_hann
 
-%% Fast Fourier Transform (sull'intero segnale)
+%% Energy
 % Section ID = 6
+
+% It requires that signal is already framed
+% Execute Section ID=4
+
+for i=1:numFrames
+    energy(i)=sum(abs(Y(:,i)).^2);
+end
+
+figure, plot(energy)
+
+%% Fast Fourier Transform (sull'intero segnale)
+% Section ID = 7
 
 NFFT = 2^nextpow2(numberOfSamples); % Next higher power of 2. (in order to optimize FFT computation)
 freqSignal = fft(data,NFFT)/numberOfSamples;
@@ -118,7 +137,7 @@ ylabel('|Y(f)|')
 clear NFFT freqSignal f
 
 %% Short Term Fourier Transform
-% Section ID = 7
+% Section ID = 8
 
 % It requires that signal is already framed
 % Execute Section ID=4
@@ -150,8 +169,8 @@ title('Spectrogram [dB]')
 
 clear indexToPlot
 
-%% Auto-Correlazione per frames
-% Section ID = 8
+%% Auto-Correlation per frames
+% Section ID = 9
  
 % It requires that signal is already framed
 % Execute Section ID=4
