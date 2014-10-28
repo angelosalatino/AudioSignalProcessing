@@ -1,5 +1,5 @@
-filename$ = "./test.wav"
-Read from file... ../A/'fileName$'
+fileName$ = "test.wav"
+Read from file... 'fileName$'
 name$ = fileName$ - ".wav"
 select Sound 'name$'
  To Pitch (ac)... 0.0 50.0 15 off 0.1 0.60 0.01 0.35 0.14 500.0
@@ -11,9 +11,10 @@ select Sound 'name$'
 		if value = undefined
 			value=0
 		endif
-		path$="./data/PITCH/"+name$+"_pitch.txt"
+		path$=name$+"_pitch.txt"
 		fileappend 'path$' 'time' 'value' 'newline$'
 	    endfor
-		select Pitch 'name$'
-		Remove
-	endfor
+	select Pitch 'name$'
+	Remove
+        select Sound 'name$'
+	Remove
