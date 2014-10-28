@@ -1,0 +1,8 @@
+############################################################
+#
+#  PRAAT
+#
+############################################################
+
+
+pitch.psc: Praat Script able to extract pitch values form speech signal (in wav).
