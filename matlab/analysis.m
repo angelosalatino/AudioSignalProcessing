@@ -38,6 +38,9 @@ disp (sprintf('Number of Channels: %d', min(size(data))));
 
 %play file
 sound(data,fs);
+%PLOT the signal
+time = linspace(0,tempo,numberOfSamples);
+plot(time,data);
 
 clear tempo
 
@@ -113,14 +116,15 @@ clear num_points w_gauss w_hamming w_hann
 % Section ID = 6
 
 % It requires that signal is already framed
-% Execute Section ID=4
+% Run Section ID=4
 
 for i=1:numFrames
-    %energy(i)=sum(abs(Y(:,i)).^2); % Windowed Signal
-    energy(i)=sum(abs(old_Y(:,i)).^2);
+    energy(i)=sum(abs(Y(:,i)).^2); % Windowed Signal
+    %energy(i)=sum(abs(old_Y(:,i)).^2);
 end
 
 figure, plot(energy)
+xlabel('# of frames')
 
 %% Fast Fourier Transform (sull'intero segnale)
 % Section ID = 7
@@ -141,7 +145,7 @@ clear NFFT freqSignal f
 % Section ID = 8
 
 % It requires that signal is already framed and windowed
-% Execute Section ID = 4 and 5
+% Run Section ID = 4 and 5
 
 NFFT = 2^nextpow2(sampleForWindow); 
 STFT = ones(NFFT,numFrames);
@@ -174,7 +178,7 @@ clear indexToPlot
 % Section ID = 9
  
 % It requires that signal is already framed
-% Execute Section ID=4
+% Run Section ID=4
 
 for i=1:numFrames
     autoCorr(:,i)=xcorr(Y(:,i));
