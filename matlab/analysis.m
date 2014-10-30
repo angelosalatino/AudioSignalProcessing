@@ -130,11 +130,11 @@ xlabel('# of frames')
 % Section ID = 7
 
 NFFT = 2^nextpow2(numberOfSamples); % Next higher power of 2. (in order to optimize FFT computation)
-freqSignal = fft(data,NFFT)/numberOfSamples;
+freqSignal = fft(data,NFFT);
 f = fs/2*linspace(0,1,NFFT/2+1);
 
-% PLOT
-plot(f,2*abs(freqSignal(1:NFFT/2+1)))
+% PLOT the magnitude of fft of data
+plot(f,abs(freqSignal(1:NFFT/2+1)))
 title('Single-Sided Amplitude Spectrum of y(t)')
 xlabel('Frequency (Hz)')
 ylabel('|Y(f)|')
@@ -151,7 +151,7 @@ NFFT = 2^nextpow2(sampleForWindow);
 STFT = ones(NFFT,numFrames);
 
 for i=1:numFrames
-    STFT(:,i)=fft(Y(:,i),NFFT)/sampleForWindow;
+    STFT(:,i)=fft(Y(:,i),NFFT);
 end
 
 indexToPlot = 80; %frame index to plot
@@ -196,5 +196,4 @@ else
 end
 
 clear indexToPlot
-
 
